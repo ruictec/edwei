@@ -1,0 +1,10 @@
+FROM openjdk:8
+
+EXPOSE 14001
+
+COPY zuul.sh /zuul.sh
+COPY rct-zuul-0.0.1.jar /rct-zuul.jar
+
+RUN chmod 777 /zuul.sh
+
+ENTRYPOINT ["sh","/zuul.sh"]

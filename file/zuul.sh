@@ -1,0 +1,1 @@
+nohup java -javaagent:/rct-zuul.jar='-pwd rct#1234' -jar -Dfile.encoding=utf-8 /rct-zuul.jar

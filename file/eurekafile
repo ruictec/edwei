@@ -1,0 +1,10 @@
+FROM openjdk:8
+
+EXPOSE 8888
+
+COPY eureka.sh /eureka.sh
+COPY rct-eureka-0.0.1.jar /rct-eureka.jar
+
+RUN chmod 777 /eureka.sh
+
+ENTRYPOINT ["sh","/eureka.sh"]

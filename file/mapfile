@@ -1,0 +1,10 @@
+FROM openjdk:8
+
+EXPOSE 14501
+
+COPY map.sh /map.sh
+COPY rct-map-0.0.1.jar /rct-map.jar
+
+RUN chmod 777 /map.sh
+
+ENTRYPOINT ["sh","/map.sh"]

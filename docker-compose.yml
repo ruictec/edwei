@@ -1,0 +1,199 @@
+version: "3"
+
+services:
+  rct-eureka: 
+    image: rct-eureka
+    restart: unless-stopped
+    build:
+      context: ./file
+      dockerfile: eurekafile
+    environment:
+      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
+    ports:
+      - 8888:8888
+
+  rct-user: 
+    image: rct-user
+    restart: unless-stopped
+    build:
+      context: ./file
+      dockerfile: userfile
+    volumes:
+      - ./log/rct-user/:/usr/local/var/logs/rct-user/
+      - ./profile/:/usr/local/picture/
+    environment:
+      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
+    depends_on:
+      - rct-eureka
+      - mysql
+      - redis
+    ports:
+      - 14301:14301
+
+  rct-devices: 
+    image: rct-devices
+    restart: unless-stopped
+    build:
+      context: ./file
+      dockerfile: devicesfile
+    volumes:
+      - ./log/rct-devices/:/usr/local/var/logs/rct-devices/
+    environment:
+      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
+    depends_on:
+      - rct-eureka
+      - mysql
+      - redis
+    ports:
+      - 14401:14401
+
+  rct-map: 
+    image: rct-map
+    restart: unless-stopped
+    build:
+      context: ./file
+      dockerfile: mapfile
+    volumes:
+      - ./log/rct-map/:/usr/local/var/logs/rct-map/
+      - ./profile/:/usr/local/picture/
+    environment:
+      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
+    depends_on:
+      - rct-eureka
+      - mysql
+      - redis
+    ports:
+      - 14501:14501
+
+  rct-zuul: 
+    image: rct-zuul
+    restart: unless-stopped
+    build:
+      context: ./file
+      dockerfile: zuulfile
+    volumes:
+      - ./log/rct-zuul/:/usr/local/var/logs/rct-zuul/
+      - ./profile/:/usr/local/picture/
+      - ./config:/usr/local/config
+      - ./certs:/usr/local/certs
+    environment:
+      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
+    depends_on:
+      - rct-eureka
+    ports:
+      - 14001:14001
+
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    volumes:
+      - ./configuration/nginx/html:/etc/nginx/html
+      - ./configuration/nginx/data:/etc/nginx/data
+      - ./log/nginx:/var/log/nginx
+      - ./configuration/nginx/nginx.conf:/etc/nginx/nginx.conf
+    environment:
+      - TZ=Asia/Shanghai
+    privileged: true
+    depends_on:
+      - rct-zuul
+
+  chirpstack:
+    image: chirpstack/chirpstack:4
+    command: -c /etc/chirpstack
+    restart: unless-stopped
+    volumes:
+      - ./configuration/chirpstack:/etc/chirpstack
+      - ./lorawan-devices:/opt/lorawan-devices
+    depends_on:
+      - postgres
+      - mosquitto
+      - redis
+    environment:
+      - MQTT_BROKER_HOST=mosquitto
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=rct@1234
+      - POSTGRESQL_HOST=postgres
+    ports:
+      - 8080:8080
+
+  chirpstack-gateway-bridge:
+    image: chirpstack/chirpstack-gateway-bridge:4
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+    environment:
+      - INTEGRATION__MQTT__EVENT_TOPIC_TEMPLATE=cn470_6/gateway/{{ .GatewayID }}/event/{{ .EventType }}
+      - INTEGRATION__MQTT__STATE_TOPIC_TEMPLATE=cn470_6/gateway/{{ .GatewayID }}/state/{{ .StateType }}
+      - INTEGRATION__MQTT__COMMAND_TOPIC_TEMPLATE=cn470_6/gateway/{{ .GatewayID }}/command/#
+    depends_on:
+      - mosquitto
+  
+  chirpstack-gateway-bridge-basicstation:
+    image: chirpstack/chirpstack-gateway-bridge:4
+    restart: unless-stopped
+    command: -c /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge-basicstation-eu868.toml
+    ports:
+      - 3001:3001
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+    depends_on:
+      - mosquitto
+
+  chirpstack-rest-api:
+    image: chirpstack/chirpstack-rest-api:4
+    restart: unless-stopped
+    command: --server chirpstack:8080 --bind 0.0.0.0:8090 --insecure
+    ports:
+      - 8090:8090
+    depends_on:
+      - chirpstack
+
+  postgres:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    volumes:
+      - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - ./data/redis:/var/run/redis
+      - ./configuration/redis/redis.conf:/usr/local/redis/conf/redis.conf
+      - ./log/redis:/var/log/redis
+    ports:
+      - 6379:6379
+    command: ["redis-server","/usr/local/redis/conf/redis.conf"]
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - 1883:1883
+    volumes: 
+      - ./configuration/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: Ru44q1GwXMjjLT
+      MYSQL_DATABASE: rct_iot
+    volumes:
+      - ./configuration/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/mysql/:/var/lib/mysql/
+      - ./log/mysql/:/var/log/mysql/
+      - ./configuration/mysql/init/:/docker-entrypoint-initdb.d/
+    command: --defaults-file=/etc/mysql/my.cnf
+
+volumes:
+  postgresqldata:

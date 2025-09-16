@@ -1,0 +1,10 @@
+FROM openjdk:8
+
+EXPOSE 14301
+
+COPY user.sh /user.sh
+COPY rct-user-0.0.1.jar /rct-user.jar
+
+RUN chmod 777 /user.sh
+
+ENTRYPOINT ["sh","/user.sh"]

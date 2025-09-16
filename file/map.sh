@@ -1,0 +1,1 @@
+nohup java -javaagent:/rct-map.jar='-pwd rct#1234' -jar -Dfile.encoding=utf-8 /rct-map.jar

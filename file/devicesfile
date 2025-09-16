@@ -1,0 +1,10 @@
+FROM openjdk:8
+
+EXPOSE 14401
+
+COPY devices.sh /devices.sh
+COPY rct-devices-0.0.1.jar /rct-devices.jar
+
+RUN chmod 777 /devices.sh
+
+ENTRYPOINT ["sh","/devices.sh"]
