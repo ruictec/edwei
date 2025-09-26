@@ -103,6 +103,7 @@ edwei/
 ## ChirpStacK
 
 **账号信息**
+- ChirpStacK地址：http://IP:8080
 - ChirpStacK管理员账号为：admin/admin
 
 **创建Key**
