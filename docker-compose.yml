@@ -93,6 +93,7 @@ services:
       - ./configuration/nginx/data:/etc/nginx/data
       - ./log/nginx:/var/log/nginx
       - ./configuration/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/usr/local/certs
     environment:
       - TZ=Asia/Shanghai
     privileged: true
