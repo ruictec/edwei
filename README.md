@@ -107,7 +107,7 @@ edwei/
 - ChirpStacK管理员账号为：admin/admin
 
 **创建Key**
-- 在API key界面创建并记录key
+- 在Network Server下面的API key界面创建并记录key
 
 ## 定位平台
 

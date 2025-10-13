@@ -105,7 +105,7 @@ edwei/
 - ChirpStack admin account: admin/admin
 
 **Creating Key**
-- Create and record key in API key interface
+- Create and record the key in the API key interface under the Network Server
 
 ## Location Platform
 
