@@ -126,7 +126,7 @@ edwei/
 
 **LNS Configuration**
 - Add ChirpStack information in NS management page
-- Domain and IP are both chirpstack
+- Domain and IP are both chirpstack-rest-api
 - Port number is 8090
 - Access user fill in root
 - Access password use key created in ChirpStack

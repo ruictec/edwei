@@ -128,7 +128,7 @@ edwei/
 
 **LNS配置**
 - 添加ChirpStack信息位置在NS管理页面
-- 域名和ip都为chirpstack
+- 域名和ip都为chirpstack-rest-api
 - 端口号为8090
 - 访问用户填写root
 - 访问密码用ChirpStacK中创建的key
