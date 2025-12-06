@@ -23,6 +23,7 @@
 - Ensure proper file permissions for redis files
 - Modify the address example.com in /edwei/configuration/nginx/nginx.conf file
 - Modify the EUREKA_SERVER_IP value in /edwei/.env file to the server IP
+- Pulling the openjdk:8 image makes it more convenient to operate locally. Command: docker pull openjdk:8
 
 ## Certificate Configuration
 

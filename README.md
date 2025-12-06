@@ -25,6 +25,7 @@
 - 确保redis文件的操作权限
 - 修改/edwei/configuration/nginx/nginx.conf文件中的地址example.com
 - 修改/edwei/.env文件中EUREKA_SERVER_IP的值为服务器ip
+- 拉取openjdk:8镜像可以更方便在本地进行操作，命令：docker pull openjdk:8
 
 ## 证书配置
 
