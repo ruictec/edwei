@@ -190,11 +190,9 @@ services:
       MYSQL_ROOT_PASSWORD: Ru44q1GwXMjjLT
       MYSQL_DATABASE: rct_iot
     volumes:
-      - ./configuration/mysql/my.cnf:/etc/mysql/my.cnf
       - ./data/mysql/:/var/lib/mysql/
       - ./log/mysql/:/var/log/mysql/
       - ./configuration/mysql/init/:/docker-entrypoint-initdb.d/
-    command: --defaults-file=/etc/mysql/my.cnf
 
 volumes:
   postgresqldata:

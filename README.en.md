@@ -137,4 +137,31 @@ edwei/
 - Downlink command topic: application/{{application_id}}/device/{{dev_eui}}/command/{{command}}
 - Username and password default to empty
 
+**Add secondary enterprise information**
+- On the 【User Management】 -> 【Purchasing Company】 page, add the information of the secondary company
+- After adding the information of the secondary company, you can obtain the identification number of the secondary company
+
+**Register as an enterprise administrator**
+- Record the identification number of the secondary company
+- Click the "Register" button on the login page to complete the registration process
+- Note: The username cannot be in Chinese characters
+
+**Synchronize LNS information**
+- Log in to the Super Administrator account
+- On the "Purchasing Company" page, click the "Sync" button and select the LNS option
+
+**Add third-level enterprise information**
+- Log in to the secondary enterprise administrator account
+- On the 【User Management】 -> 【Purchasing Company】 page, add the information of the third-level company
+
+**Add User**
+- On the 【User Management】 page, click the "Add" button and select "User" to add user information
+
+**Technical Email**
+- Email: support@ruichuangte.com
+
+
+
+
+
 
