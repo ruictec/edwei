@@ -44,6 +44,7 @@ docker-compose up -d
 ```
 ## 二次开发部署
 
+- 源代码地址：https://github.com/ruictec/location_web
 - 打包前端代码生成static和index.html文件
 - 替换/edwei/configuration/nginx/html目录下的static和index.html文件
 - 修改/edwei/configuration/nginx/nginx.conf文件中的配置

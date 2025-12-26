@@ -41,6 +41,7 @@ docker-compose up -d
 ```
 ## Secondary Development Deployment
 
+- Source address: https://github.com/ruictec/location_web
 - Package frontend code to generate static and index.html files
 - Replace static and index.html files in /edwei/configuration/nginx/html directory
 - Modify configuration in /edwei/configuration/nginx/nginx.conf file
