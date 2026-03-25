@@ -563,8 +563,10 @@ DROP TABLE IF EXISTS `fence_manage_tbl`;
 CREATE TABLE `fence_manage_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '围栏的编号',
   `name` varchar(32) DEFAULT NULL COMMENT '围栏名',
+  `flag` tinyint(1) NOT NULL DEFAULT '1',
   `colour` varchar(16) DEFAULT NULL COMMENT '围栏颜色',
   `projectid` varchar(64) DEFAULT NULL COMMENT '所属项目id',
+  `groundid` int(10) unsigned DEFAULT NULL COMMENT '楼层编号',
   `time` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_name` (`name`,`projectid`)
@@ -1241,4 +1243,3 @@ CREATE TABLE `warning_voice_tbl` (
 #
 # Data for table "warning_voice_tbl"
 #
-
