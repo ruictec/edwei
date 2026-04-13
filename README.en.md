@@ -1,3 +1,20 @@
+## Operating Procedures
+
+- 1. Install Docker
+- 2. Install Docker Compose
+- 3. Change the value of EUREKA_SERVER_IP in the /edwei/.env file to the local IP address
+- 4. Deploy the Edwei positioning service
+- 5. Log in with the ChirpStack administrator account, create and record the API key on the Network Server API Key page
+- 6. Log in with the super admin account of the positioning platform, add LNS information and create secondary company information
+- 7. Register an administrator account for the secondary company
+- 8. Log in with the secondary company administrator account to create tertiary companies, tertiary company user accounts, and projects
+- 9. Modify the base station data address to the local IP address
+- 10. Log in with the super admin account of the positioning platform, add information of base stations, terminal devices and beacons
+- 11. Log in with the secondary company administrator account to assign terminal devices and beacons to corresponding projects
+- 12. Log in with the tertiary company user account to upload and submit maps
+- 13. Log in with the super admin account of the positioning platform to review the submitted maps
+- 14. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
+
 ## Technology Stack
 
 - **Backend Framework**: Spring Boot 2.1.8, Spring Cloud Greenwich.SR2
