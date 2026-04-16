@@ -63,7 +63,7 @@ type="semtech_udp"
   # This is the listener to which the packet-forwarder forwards its data
   # so make sure the 'serv_port_up' and 'serv_port_down' from your
   # packet-forwarder matches this port.
-  udp_bind = "0.0.0.0:1700"
+  udp_bind = "0.0.0.0:1701"
 
   # Skip the CRC status-check of received packets
   #
@@ -190,9 +190,9 @@ marshaler="protobuf"
 
   # MQTT integration configuration.
   [integration.mqtt]
-  event_topic_template="cn470_6/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
-  state_topic_template="cn470_6/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
-  command_topic_template="cn470_6/gateway/{{ .GatewayID }}/command/#"
+  event_topic_template="cn470_6_datang/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
+  state_topic_template="cn470_6_datang/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
+  command_topic_template="cn470_6_datang/gateway/{{ .GatewayID }}/command/#"
 
   # Maximum interval that will be waited between reconnection attempts when connection is lost.
   # Valid units are 'ms', 's', 'm', 'h'. Note that these values can be combined, e.g. '24h30m15s'.
