@@ -279,7 +279,7 @@ CREATE TABLE `customers_tbl` (
 # Data for table "customers_tbl"
 #
 
-INSERT INTO `customers_tbl` VALUES (1,'系统管理员公司','1388888888','121321@163.com','China','xxxxx','qpb7jakk','qpb7jakk',1,'6a3ca77416ec43b4a58f19085f1e104f','CN470',0,1,2,6,10,100,30,1,'1646210870.png',1603788167,'testdsd','1000000000000000');
+INSERT INTO `customers_tbl` VALUES (1,'superAdmin','1388888888','121321@163.com','China','xxxxx','qpb7jakk','qpb7jakk',1,'6a3ca77416ec43b4a58f19085f1e104f','CN470',0,1,2,6,10,100,30,1,'1646210870.png',1603788167,'testdsd','1000000000000000');
 
 #
 # Structure for table "dev_command_tbl"
