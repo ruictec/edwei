@@ -18,6 +18,8 @@
 ## Registration Code
 - 1. When the page displays the following message, the registration code needs to be updated.
 - 2. Message: The registration file does not exist! The registration code has expired! The target quantity has reached the maximum limit! The equipment is illegal!
+- 3. Under the super administrator "admin" account, the personal center page allows for the update of the registration code.
+- 4. If the registration code has expired, you need to manually update the "edwei/profile/openRegister.txt" file, and then restart the rct-service service.
 
 ## Technology Stack
 
