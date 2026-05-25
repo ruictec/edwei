@@ -15,6 +15,10 @@
 - 13. Log in with the super admin account of the positioning platform to review the submitted maps
 - 14. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
 
+## Registration Code
+- 1. When the page displays the following message, the registration code needs to be updated.
+- 2. Message: The registration file does not exist! The registration code has expired! The target quantity has reached the maximum limit! The equipment is illegal!
+
 ## Technology Stack
 
 - **Backend Framework**: Spring Boot 2.1.8, Spring Cloud Greenwich.SR2

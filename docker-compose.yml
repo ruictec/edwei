@@ -12,49 +12,14 @@ services:
     ports:
       - 8888:8888
 
-  rct-user: 
-    image: rct-user
+  rct-service: 
+    image: rct-service
     restart: unless-stopped
     build:
       context: ./file
-      dockerfile: userfile
+      dockerfile: servicefile
     volumes:
-      - ./log/rct-user/:/usr/local/var/logs/rct-user/
-      - ./profile/:/usr/local/picture/
-    environment:
-      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
-    depends_on:
-      - rct-eureka
-      - mysql
-      - redis
-    ports:
-      - 14301:14301
-
-  rct-devices: 
-    image: rct-devices
-    restart: unless-stopped
-    build:
-      context: ./file
-      dockerfile: devicesfile
-    volumes:
-      - ./log/rct-devices/:/usr/local/var/logs/rct-devices/
-    environment:
-      - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
-    depends_on:
-      - rct-eureka
-      - mysql
-      - redis
-    ports:
-      - 14401:14401
-
-  rct-map: 
-    image: rct-map
-    restart: unless-stopped
-    build:
-      context: ./file
-      dockerfile: mapfile
-    volumes:
-      - ./log/rct-map/:/usr/local/var/logs/rct-map/
+      - ./log/rct-service/:/usr/local/var/logs/rct-service/
       - ./profile/:/usr/local/picture/
     environment:
       - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}

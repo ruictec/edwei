@@ -1,0 +1,10 @@
+FROM openjdk:8
+
+EXPOSE 14401
+
+COPY service.sh /service.sh
+COPY rct-service-0.0.1.jar /rct-service.jar
+
+RUN chmod 777 /service.sh
+
+ENTRYPOINT ["sh","/service.sh"]

@@ -1,1 +1,0 @@
-nohup java -javaagent:/rct-devices.jar='-pwd rct#1234' -jar -Dfile.encoding=utf-8 /rct-devices.jar
