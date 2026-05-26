@@ -23,6 +23,8 @@ services:
       - ./profile/:/usr/local/picture/
     environment:
       - EUREKA_SERVER_IP=${EUREKA_SERVER_IP}
+      - LORA_MQTT_USERNAME=${LORA_MQTT_USERNAME}
+      - LORA_MQTT_PASSWORD=${LORA_MQTT_PASSWORD}
     depends_on:
       - rct-eureka
       - mysql
