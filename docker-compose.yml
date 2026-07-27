@@ -68,7 +68,7 @@ services:
       - rct-zuul
 
   chirpstack:
-    image: chirpstack/chirpstack:4
+    image: chirpstack/chirpstack:4.19.0
     command: -c /etc/chirpstack
     restart: unless-stopped
     volumes:
@@ -87,7 +87,7 @@ services:
       - 8080:8080
 
   chirpstack-gateway-bridge-CN470:
-    image: chirpstack/chirpstack-gateway-bridge:4
+    image: chirpstack/chirpstack-gateway-bridge:4.1.0
     restart: unless-stopped
     ports:
       - 1700:1700/udp
@@ -98,7 +98,7 @@ services:
       - mosquitto
   
   chirpstack-gateway-bridge-basicstation:
-    image: chirpstack/chirpstack-gateway-bridge:4
+    image: chirpstack/chirpstack-gateway-bridge:4.1.0
     restart: unless-stopped
     ports:
       - 3001:3001
@@ -108,7 +108,7 @@ services:
       - mosquitto
 
   chirpstack-rest-api:
-    image: chirpstack/chirpstack-rest-api:4
+    image: chirpstack/chirpstack-rest-api:4.19.0
     restart: unless-stopped
     command: --server chirpstack:8080 --bind 0.0.0.0:8090 --insecure
     ports:
@@ -123,7 +123,9 @@ services:
       - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
       - postgresqldata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=chirpstack
+      - POSTGRES_PASSWORD=chirpstack
+      - POSTGRES_DB=chirpstack
 
   redis:
     image: redis:7-alpine

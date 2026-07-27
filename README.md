@@ -3,17 +3,18 @@
 - 1. 安装Docker
 - 2. 安装Docker-compose
 - 3. 将/edwei/.env文件中EUREKA_SERVER_IP修改成本地ip
-- 4. 部署edwei定位服务
-- 5. 用ChirpStacK管理员账号在Network Server下面的API key界面创建并记录key
-- 6. 用定位平台的admin超级管理员账号添加LNS信息、创建二级公司信息
-- 7. 注册二级公司管理员账号
-- 8. 用二级公司管理员账号创建三级公司、三级公司用户账号、项目
-- 9. 将基站数据地址改成本地ip
-- 10. 用定位平台的admin超级管理员账号添加基站信息、终端设备信息、信标信息
-- 11. 用二级公司管理员账号分配终端设备、信标至项目
-- 12. 用三级公司用户账号上传提交地图
-- 13. 用定位平台的admin超级管理员账号审核地图
-- 14. 用三级公司用户账号创建楼栋、楼层、部署信标、创建人员信息
+- 4. 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
+- 5. 部署edwei定位服务
+- 6. 用ChirpStacK管理员账号在Network Server下面的API key界面创建并记录key
+- 7. 用定位平台的admin超级管理员账号添加LNS信息、创建二级公司信息
+- 8. 注册二级公司管理员账号
+- 9. 用二级公司管理员账号创建三级公司、三级公司用户账号、项目
+- 10. 将基站数据地址改成本地ip
+- 11. 用定位平台的admin超级管理员账号添加基站信息、终端设备信息、信标信息
+- 12. 用二级公司管理员账号分配终端设备、信标至项目
+- 13. 用三级公司用户账号上传提交地图
+- 14. 用定位平台的admin超级管理员账号审核地图
+- 15. 用三级公司用户账号创建楼栋、楼层、部署信标、创建人员信息
 
 ## 注册码
 - 1. 当页面提示以下信息时，需要更新注册码
@@ -46,6 +47,7 @@
 - 确保redis文件的操作权限
 - 修改/edwei/configuration/nginx/nginx.conf文件中的地址example.com
 - 修改/edwei/.env文件中EUREKA_SERVER_IP的值为服务器ip
+- 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY天地图配置
 - 拉取openjdk:8镜像可以更方便在本地进行操作，命令：docker pull openjdk:8
 - 中国用户在选择制式时，请选择CN470制式
 
@@ -53,6 +55,12 @@
 
 - 在/edwei/certs/目录放置证书
 - 修改/edwei/configuration/nginx/nginx.conf文件中关于SSL的配置
+
+## 天地图配置
+
+- 地址：https://cloudcenter.tianditu.gov.cn/center/development/myApp
+- 在【注册】->【登录】->【服务中心控制台】->【应用管理】->【我的应用】页面，创建新应用后，获取应用密钥
+- 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
 
 ## 部署步骤
 
