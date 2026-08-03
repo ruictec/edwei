@@ -188,6 +188,7 @@ CREATE TABLE `customer_members_tbl` (
   `basenum` int(11) DEFAULT NULL COMMENT '初始基础步数',
   `steps` int(11) DEFAULT '0' COMMENT '步数',
   `stepdate` varchar(16) DEFAULT NULL COMMENT '步数日期',
+  `reboottimes` int(11) DEFAULT NULL COMMENT '设备重启次数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
