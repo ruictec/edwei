@@ -185,6 +185,9 @@ CREATE TABLE `customer_members_tbl` (
   `maplabel` varchar(16) DEFAULT NULL COMMENT '绑定标签号，可能是信标，可能是工卡',
   `filename` varchar(32) DEFAULT NULL COMMENT '头像文件名',
   `memo` varchar(255) DEFAULT NULL COMMENT '备注',
+  `basenum` int(11) DEFAULT NULL COMMENT '初始基础步数',
+  `steps` int(11) DEFAULT '0' COMMENT '步数',
+  `stepdate` varchar(16) DEFAULT NULL COMMENT '步数日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
