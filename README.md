@@ -48,7 +48,7 @@
 - 修改/edwei/configuration/nginx/nginx.conf文件中的地址example.com
 - 修改/edwei/.env文件中EUREKA_SERVER_IP的值为服务器ip
 - 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY天地图配置
-- 拉取openjdk:8镜像可以更方便在本地进行操作，命令：docker pull openjdk:8
+- 拉取 eclipse-temurin:8-jre 镜像可以更方便在本地进行操作，命令：docker pull eclipse-temurin:8-jre
 - 中国用户在选择制式时，请选择CN470制式
 
 ## 证书配置
