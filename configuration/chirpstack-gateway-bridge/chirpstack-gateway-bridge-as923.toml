@@ -79,53 +79,53 @@ type="semtech_udp"
 
 
   # ChirpStack Concentratord backend.
-  [backend.concentratord]
+  # [backend.concentratord]
 
   # Check for CRC OK.
-  crc_check=true
+  # crc_check=true
 
   # Event API URL.
-  event_url="ipc:///tmp/concentratord_event"
+  # event_url="ipc:///tmp/concentratord_event"
 
   # Command API URL.
-  command_url="ipc:///tmp/concentratord_command"
+  # command_url="ipc:///tmp/concentratord_command"
 
 
   # Basic Station backend.
   [backend.basic_station]
 
   # ip:port to bind the Websocket listener to.
-  bind=":3001"
+  # bind=":3001"
 
   # TLS certificate and key files.
   #
   # When set, the websocket listener will use TLS to secure the connections
   # between the gateways and ChirpStack Gateway Bridge (optional).
-  tls_cert=""
-  tls_key=""
+  # tls_cert=""
+  # tls_key=""
 
   # TLS CA certificate.
   #
   # When configured, ChirpStack Gateway Bridge will validate that the client
   # certificate of the gateway has been signed by this CA certificate.
-  ca_cert=""
+  # ca_cert=""
 
   # Stats interval.
   #
   # This defines the interval in which the ChirpStack Gateway Bridge forwards
   # the uplink / downlink statistics.
-  stats_interval="30s"
+  # stats_interval="30s"
 
   # Ping interval.
-  ping_interval="1m0s"
+  # ping_interval="1m0s"
 
   # Read timeout.
   #
   # This interval must be greater than the configured ping interval.
-  read_timeout="1m5s"
+  # read_timeout="1m5s"
 
   # Write timeout.
-  write_timeout="1s"
+  # write_timeout="1s"
 
   # Region.
   #
@@ -134,10 +134,10 @@ type="semtech_udp"
   region="AS923"
 
   # Minimal frequency (Hz).
-  frequency_min=922000000
+  # frequency_min=915000000
 
   # Maximum frequency (Hz).
-  frequency_max=925000000
+  # frequency_max=928000000
 
   # Concentrator configuration.
   #
@@ -190,9 +190,9 @@ marshaler="protobuf"
 
   # MQTT integration configuration.
   [integration.mqtt]
-  event_topic_template="as923/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
-  state_topic_template="as923/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
-  command_topic_template="as923/gateway/{{ .GatewayID }}/command/#"
+  event_topic_template="as923_2/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
+  state_topic_template="as923_2/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
+  command_topic_template="as923_2/gateway/{{ .GatewayID }}/command/#"
 
   # Maximum interval that will be waited between reconnection attempts when connection is lost.
   # Valid units are 'ms', 's', 'm', 'h'. Note that these values can be combined, e.g. '24h30m15s'.

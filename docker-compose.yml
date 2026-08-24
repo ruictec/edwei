@@ -51,7 +51,7 @@ services:
       - 14001:14001
 
   nginx:
-    image: nginx
+    image: nginx:1.31.0
     restart: unless-stopped
     ports:
       - 8081:8081
