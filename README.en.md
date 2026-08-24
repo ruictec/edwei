@@ -12,8 +12,7 @@
 - 10. Log in with the super admin account of the positioning platform, add information of base stations, terminal devices and beacons
 - 11. Log in with the secondary company administrator account to assign terminal devices and beacons to corresponding projects
 - 12. Log in with the tertiary company user account to upload and submit maps
-- 13. Log in with the super admin account of the positioning platform to review the submitted maps
-- 14. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
+- 13. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
 
 ## Registration Code
 - 1. When the page displays the following message, the registration code needs to be updated.
