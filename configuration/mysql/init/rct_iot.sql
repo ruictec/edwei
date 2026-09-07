@@ -19,7 +19,7 @@ CREATE TABLE `beacons_tbl` (
   `inuse` int(11) DEFAULT NULL COMMENT '使用状态：Yes,No',
   `workstate` int(11) DEFAULT NULL COMMENT '工作状态：正常,故障',
   `type` int(11) DEFAULT NULL COMMENT 'position,hazardous,asset,badge',
-  `clockin` int(11) DEFAULT NULL COMMENT '打卡点：Yes,No',,
+  `clockin` int(11) DEFAULT NULL COMMENT '打卡点：Yes,No',
   `rssi1` tinyint(4) DEFAULT '-59' COMMENT '1米处信号强度',
   `rssi2` tinyint(4) DEFAULT '-69' COMMENT '2米处信号强度',
   `h` double unsigned DEFAULT '1.5' COMMENT '信标布置高度',
@@ -245,6 +245,28 @@ CREATE TABLE `customer_tbox_tbl` (
 
 
 #
+# Structure for table "customers_config_tbl"
+#
+
+DROP TABLE IF EXISTS `customers_config_tbl`;
+CREATE TABLE `customers_config_tbl` (
+  `tenantid` varchar(64) NOT NULL COMMENT '公司标识号(对应 customers_tbl.tenantid，仅 level=2)',
+  `schemes` varchar(255) DEFAULT NULL COMMENT '设备制式',
+  `nsid` int(11) DEFAULT '0' COMMENT 'LNS服务器编号',
+  `projectnum` int(11) DEFAULT NULL COMMENT '项目数配额',
+  `mapnum` int(11) DEFAULT NULL COMMENT '地图数配额',
+  `devnum` int(11) DEFAULT NULL COMMENT '终端设备数配额',
+  `validtime` int(11) DEFAULT NULL COMMENT '数据有效时间(天)',
+  `functype` int(11) NOT NULL DEFAULT '0' COMMENT '功能类型：0正式 1测试',
+  PRIMARY KEY (`tenantid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='二级公司配置';
+
+#
+# Data for table "customers_config_tbl"
+#
+
+
+#
 # Structure for table "customers_tbl"
 #
 
@@ -260,14 +282,8 @@ CREATE TABLE `customers_tbl` (
   `tenantid` char(8) NOT NULL DEFAULT '' COMMENT '企业唯一识别号',
   `level` int(2) unsigned DEFAULT NULL COMMENT '公司级别',
   `tenantkey` char(32) NOT NULL DEFAULT '' COMMENT '用户API访问密钥',
-  `schemes` varchar(255) DEFAULT NULL COMMENT '设备制式',
-  `nsid` int(3) unsigned DEFAULT NULL COMMENT '所属ns服务器编号',
   `accprio` int(11) DEFAULT NULL COMMENT '访问权限：Yes,No',
   `maprio` int(11) DEFAULT NULL COMMENT '设置地图及建筑的权限：Yes,No',
-  `projectnum` int(3) unsigned DEFAULT '3' COMMENT '最大项目数',
-  `mapnum` int(4) unsigned DEFAULT '10' COMMENT '最大上传地图数',
-  `devnum` int(11) unsigned DEFAULT '100' COMMENT '终端设备数量',
-  `validtime` int(4) unsigned DEFAULT '30' COMMENT '数据的有效时间(天)',
   `logoprio` int(11) DEFAULT NULL,
   `filelogo` varchar(64) DEFAULT NULL COMMENT 'logo文件名',
   `createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -280,7 +296,7 @@ CREATE TABLE `customers_tbl` (
 # Data for table "customers_tbl"
 #
 
-INSERT INTO `customers_tbl` VALUES (1,'superAdmin','1388888888','121321@163.com','China','xxxxx','qpb7jakk','qpb7jakk',1,'6a3ca77416ec43b4a58f19085f1e104f','CN470',0,1,2,6,10,100,30,1,'1646210870.png',1603788167,'testdsd','1000000000000000');
+INSERT INTO `customers_tbl` VALUES (1,'superAdmin','1388888888','121321@163.com','China','xxxxx','qpb7jakk','qpb7jakk',1,'6a3ca77416ec43b4a58f19085f1e104f',1,2,1,'1646210870.png',1603788167,'testdsd','1000000000000000');
 
 #
 # Structure for table "dev_command_tbl"
@@ -394,7 +410,7 @@ CREATE TABLE `dev_config_v2` (
   `REPEATER` int(11) DEFAULT '0' COMMENT '0:设备不支持中继;1设备支持中继',
   `STATICINT` int(11) DEFAULT '0' COMMENT '0:设备静止时不发送位置数据;1~3:设备静止时每若干个心跳周期发送一次位置数据',
   `CHANNEL` int(11) DEFAULT '0' COMMENT '0:代表8通道;1代表16通道',
-  `BLEACK` int(11) DEFAULT NULL COMMENT '蓝牙消息确认：disabled,enabled', 
+  `BLEACK` int(11) DEFAULT NULL COMMENT '蓝牙消息确认：disabled,enabled',
   `THRES` int(11) DEFAULT NULL COMMENT '信号强度：No limit,-90dbm,-87dbm,-84dbm,-81dbm,-78dbm,-75dbm,-72dbm',
   `PUUID` varchar(200) DEFAULT NULL COMMENT '扫描定位Beacon的uuid',
   `AUUID` varchar(200) DEFAULT NULL COMMENT '扫描资产Beacon的uuid',
@@ -612,7 +628,7 @@ CREATE TABLE `gateway_tbl` (
   `statustime` int(11) unsigned DEFAULT NULL COMMENT '数据时间',
   `lastx` double(20,8) NOT NULL DEFAULT '0.00000000' COMMENT '位置',
   `lasty` double(20,8) NOT NULL DEFAULT '0.00000000' COMMENT '位置',
-  `network` int(11) DEFAULT NULL COMMENT '入网方式：4G卡,有线', 
+  `network` int(11) DEFAULT NULL COMMENT '入网方式：4G卡,有线',
   `cardid` varchar(32) DEFAULT NULL COMMENT '4G卡号',
   `totalbytes` varchar(32) DEFAULT NULL COMMENT '4G卡总流量',
   `firsttime` int(11) DEFAULT NULL COMMENT '创建时间',
@@ -892,6 +908,44 @@ CREATE TABLE `project_config_tbl` (
 
 
 #
+# Structure for table "project_forward_config_tbl"
+#
+
+DROP TABLE IF EXISTS `project_forward_config_tbl`;
+CREATE TABLE `project_forward_config_tbl` (
+  `projectid` varchar(8) NOT NULL COMMENT '项目编号(对应 project_tbl.projectid)',
+  `mqttname` varchar(32) DEFAULT NULL COMMENT 'MQTT用户名',
+  `mqttpwd` varchar(128) DEFAULT NULL COMMENT 'MQTT密码',
+  `url` varchar(255) DEFAULT NULL COMMENT '消息HTTP/MQTT地址',
+  PRIMARY KEY (`projectid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='项目数据转发配置(MQTT/HTTP)';
+
+#
+# Data for table "project_forward_config_tbl"
+#
+
+
+#
+# Structure for table "project_server_config_tbl"
+#
+
+DROP TABLE IF EXISTS `project_server_config_tbl`;
+CREATE TABLE `project_server_config_tbl` (
+  `projectid` varchar(8) NOT NULL COMMENT '项目编号(对应 project_tbl.projectid)',
+  `ttnbroker` varchar(255) DEFAULT NULL COMMENT 'MQTT Broker地址',
+  `ttname` varchar(64) DEFAULT NULL COMMENT '连接用户名',
+  `ttnpwd` varchar(128) DEFAULT NULL COMMENT '连接密码',
+  `uptopic` varchar(255) DEFAULT NULL COMMENT '上行topic',
+  `downtopic` varchar(255) DEFAULT NULL COMMENT '下行topic',
+  PRIMARY KEY (`projectid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='项目外部服务器配置(TTN/ChirpStack)';
+
+#
+# Data for table "project_server_config_tbl"
+#
+
+
+#
 # Structure for table "project_tbl"
 #
 
@@ -908,15 +962,7 @@ CREATE TABLE `project_tbl` (
   `datatime` int(11) NOT NULL DEFAULT '60000' COMMENT '反向定位时间(毫秒数)',
   `timezone` int(11) NOT NULL DEFAULT '0' COMMENT '时区时间差',
   `forward` int(11) DEFAULT NULL COMMENT '消息是否转发（MQTT,HTTP,No）',
-  `mqttname` varchar(16) DEFAULT NULL COMMENT 'mqtt连接用户名',
-  `mqttpwd` varchar(120) DEFAULT NULL COMMENT 'mqtt连接密码',
-  `url` varchar(255) DEFAULT NULL COMMENT '数据转发地址',
   `net` int(11) DEFAULT NULL COMMENT '网络服务器（内置,TTN,ChirpStack-MQTT,ChirpStack-HTTP,其它）',
-  `ttnbroker` varchar(125) DEFAULT NULL COMMENT 'MQTT Broker',
-  `ttname` varchar(125) DEFAULT NULL COMMENT 'username',
-  `ttnpwd` varchar(255) DEFAULT NULL COMMENT 'password',
-  `uptopic` varchar(125) DEFAULT NULL COMMENT '上行topic',
-  `downtopic` varchar(125) DEFAULT NULL COMMENT '下行topic',
   `longi` double(20,8) DEFAULT NULL COMMENT '地图中心点经度',
   `lati` double(20,8) DEFAULT NULL COMMENT '地图中心点纬度',
   `zoom` double(6,2) DEFAULT '8.00' COMMENT '地图缩放倍数',
@@ -924,6 +970,7 @@ CREATE TABLE `project_tbl` (
   `username` varchar(32) DEFAULT NULL COMMENT '用户名',
   `setkey` char(32) DEFAULT NULL COMMENT '镶嵌功能访问密钥',
   `filename` varchar(64) DEFAULT NULL COMMENT '项目背景图片文件名',
+  `functype` int(11) NOT NULL DEFAULT '0' COMMENT '功能类型：0正式 1测试',
   `memo` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`,`projectid`),
   KEY `id` (`id`) USING BTREE
@@ -935,25 +982,58 @@ CREATE TABLE `project_tbl` (
 
 
 #
+# Structure for table "qpb7ja9k_gps_tbl"
+#
+
+DROP TABLE IF EXISTS `qpb7ja9k_gps_tbl`;
+CREATE TABLE `qpb7ja9k_gps_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `projectid` varchar(8) DEFAULT NULL COMMENT '项目编号',
+  `deveui` varchar(16) NOT NULL DEFAULT '' COMMENT '设备号/信标编号',
+  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
+  `devtype` int(11) DEFAULT NULL COMMENT '类型：tracker,beacon,asset,tbox',
+  `postype` int(11) DEFAULT NULL COMMENT '类型：Ble,Gps',
+  `buildid` int(11) DEFAULT '0' COMMENT '楼栋编号',
+  `groundid` int(11) DEFAULT NULL COMMENT '楼层编号',
+  `tranchid` int(11) DEFAULT NULL COMMENT '区域编号',
+  `tranche` varchar(32) DEFAULT NULL COMMENT '位置信标分组，进行行为分析',
+  `eui` varchar(16) DEFAULT '' COMMENT '室内定位扫描到信号最强的设备号',
+  `anglimit` tinyint(4) DEFAULT '15' COMMENT '限制定位的角度',
+  `x` double(20,8) DEFAULT NULL COMMENT '人所在地图经度投影',
+  `y` double(20,8) DEFAULT NULL COMMENT '人所在地图纬度投影',
+  `rssi` tinyint(4) DEFAULT NULL COMMENT '信号强度',
+  `gpstime` int(11) DEFAULT NULL COMMENT '在当前位置的时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_projectid_deveui` (`projectid`,`deveui`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='测试环境共享定位表';
+
+#
+# Data for table "qpb7ja9k_gps_tbl"
+#
+
+
+#
 # Structure for table "qpb7ja9k_status_record_tbl"
 #
 
 DROP TABLE IF EXISTS `qpb7ja9k_status_record_tbl`;
 CREATE TABLE `qpb7ja9k_status_record_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tenantid` varchar(16) DEFAULT NULL COMMENT '公司识别号',
   `deveui` varchar(16) NOT NULL,
   `vibstate` enum('static','move') DEFAULT 'static' COMMENT '运动状态',
   `steps` int(11) DEFAULT NULL COMMENT '步数',
-  `battery` enum('未充电','正在充电','充电完成','未知') DEFAULT '未知' COMMENT '充电状态',
+  `battery` int(11) DEFAULT NULL,
   `vol` tinyint(4) DEFAULT NULL COMMENT '电量',
   `gwrssi` smallint(6) DEFAULT '0' COMMENT '基站接收信号强度',
   `gwsnr` float(6,2) DEFAULT '0.00' COMMENT '基站接收信噪比',
   `rssi` smallint(6) NOT NULL DEFAULT '0' COMMENT '设备接收信号强度',
   `snr` float(6,2) DEFAULT NULL COMMENT '设备接收信噪比',
   `freq` float(6,1) DEFAULT NULL COMMENT '发送频点',
-  `gnss` enum('off','locating','succeed','failed','indoor','static') DEFAULT 'off' COMMENT '定位状态',
+  `gnss` int(11) DEFAULT NULL,
   `time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_tenantid_deveui` (`tenantid`,`deveui`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='设备状态表';
 
 #
@@ -968,6 +1048,7 @@ CREATE TABLE `qpb7ja9k_status_record_tbl` (
 DROP TABLE IF EXISTS `qpb7ja9k_tracker_test_tbl`;
 CREATE TABLE `qpb7ja9k_tracker_test_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tenantid` varchar(16) DEFAULT NULL COMMENT '公司识别号',
   `deveui` varchar(16) NOT NULL,
   `freq` float(6,1) DEFAULT NULL COMMENT '频点',
   `dr` tinyint(3) DEFAULT NULL COMMENT '速率',
@@ -976,16 +1057,51 @@ CREATE TABLE `qpb7ja9k_tracker_test_tbl` (
   `gwno` tinyint(4) DEFAULT NULL COMMENT '网关数量',
   `framecount` int(11) NOT NULL DEFAULT '0' COMMENT '帧号',
   `msgtype` varchar(64) DEFAULT NULL COMMENT '消息类型',
-  `payload` varchar(1500) DEFAULT NULL COMMENT '通用字段',
+  `payload` text COMMENT '通用字段',
   `reboot` smallint(6) DEFAULT NULL COMMENT '重启次数',
   `pktlost` smallint(6) DEFAULT NULL COMMENT '丢包数量',
   `ratelost` float(7,4) DEFAULT NULL COMMENT '丢包率',
   `time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_tenantid_deveui` (`tenantid`,`deveui`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='测试表';
 
 #
 # Data for table "qpb7ja9k_tracker_test_tbl"
+#
+
+
+#
+# Structure for table "qpb7ja9k_warning_tbl"
+#
+
+DROP TABLE IF EXISTS `qpb7ja9k_warning_tbl`;
+CREATE TABLE `qpb7ja9k_warning_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tenantid` varchar(16) DEFAULT NULL COMMENT '公司识别号',
+  `deveui` varchar(16) DEFAULT NULL COMMENT '设备编号',
+  `username` varchar(600) DEFAULT NULL COMMENT '员工姓名',
+  `projectid` varchar(8) DEFAULT NULL COMMENT '所属项目id',
+  `type` int(11) DEFAULT NULL,
+  `warnid` int(11) DEFAULT NULL COMMENT '触发告警的告警配置id',
+  `status` int(11) DEFAULT NULL,
+  `buildid` int(11) unsigned DEFAULT NULL COMMENT '楼栋编号',
+  `groundid` int(11) unsigned DEFAULT NULL COMMENT '楼层编号',
+  `tranchid` int(11) unsigned DEFAULT NULL COMMENT '告警区域id',
+  `tranche` varchar(32) DEFAULT NULL COMMENT '告警区域',
+  `devtype` int(11) DEFAULT NULL,
+  `postype` int(11) DEFAULT NULL,
+  `x` double(20,8) DEFAULT NULL COMMENT '人所在地图经度投影',
+  `y` double(20,8) DEFAULT NULL COMMENT '人所在地图纬度投影',
+  `gpstime` int(11) DEFAULT NULL COMMENT '在当前位置的时间',
+  `time` int(11) DEFAULT NULL COMMENT '时间',
+  `statustime` int(11) DEFAULT NULL COMMENT '消除告警的时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_tenantid_deveui` (`tenantid`,`projectid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='告警事件';
+
+#
+# Data for table "qpb7ja9k_warning_tbl"
 #
 
 
@@ -1063,83 +1179,6 @@ CREATE TABLE `task_management_tbl` (
 
 
 #
-# Structure for table "tenantid_gateway_record_tbl"
-#
-
-DROP TABLE IF EXISTS `tenantid_gateway_record_tbl`;
-CREATE TABLE `tenantid_gateway_record_tbl` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='反向定位位置记录';
-
-#
-# Data for table "tenantid_gateway_record_tbl"
-#
-
-
-#
-# Structure for table "tenantid_status_record_tbl"
-#
-
-DROP TABLE IF EXISTS `tenantid_status_record_tbl`;
-CREATE TABLE `tenantid_status_record_tbl` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `deveui` char(16) NOT NULL DEFAULT '',
-  `vibstate` enum('static','move') DEFAULT 'static' COMMENT '运动状态',
-  `battery` enum('未充电','正在充电','充电完成','未知') DEFAULT NULL COMMENT '充电状态',
-  `vol` tinyint(4) DEFAULT NULL COMMENT '电池电量',
-  `gwrssi` smallint(6) DEFAULT '0' COMMENT '基站接收信号强度',
-  `gwsnr` float(6,2) DEFAULT '0.00' COMMENT '基站接收信噪比',
-  `rssi` smallint(6) NOT NULL DEFAULT '0' COMMENT '设备接收信号强度',
-  `snr` float(6,2) DEFAULT NULL COMMENT '设备接收信噪比',
-  `freq` float(6,1) DEFAULT NULL COMMENT '发送频点',
-  `gnss` enum('off','locating','succeed','failed') DEFAULT NULL COMMENT '定位状态',
-  `time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='设备状态表';
-
-#
-# Data for table "tenantid_status_record_tbl"
-#
-
-
-#
-# Structure for table "tenantid_tracker_record_tbl"
-#
-
-DROP TABLE IF EXISTS `tenantid_tracker_record_tbl`;
-CREATE TABLE `tenantid_tracker_record_tbl` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='正向定位位置记录';
-
-#
-# Data for table "tenantid_tracker_record_tbl"
-#
-
-
-#
-# Structure for table "undo_log"
-#
-
-DROP TABLE IF EXISTS `undo_log`;
-CREATE TABLE `undo_log` (
-  `branch_id` bigint(20) NOT NULL COMMENT 'branch transaction id',
-  `xid` varchar(100) NOT NULL COMMENT 'global transaction id',
-  `context` varchar(128) NOT NULL COMMENT 'undo_log context,such as serialization',
-  `rollback_info` longblob NOT NULL COMMENT 'rollback info',
-  `log_status` int(11) NOT NULL COMMENT '0:normal status,1:defense status',
-  `log_created` datetime(6) NOT NULL COMMENT 'create datetime',
-  `log_modified` datetime(6) NOT NULL COMMENT 'modify datetime',
-  UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='AT transaction mode undo table';
-
-#
-# Data for table "undo_log"
-#
-
-
-#
 # Structure for table "users_operate_tbl"
 #
 
@@ -1152,7 +1191,7 @@ CREATE TABLE `users_operate_tbl` (
   `module` varchar(32) DEFAULT NULL COMMENT '操作模块',
   `enmodule` varchar(64) DEFAULT NULL COMMENT '操作模块',
   `method` varchar(63) DEFAULT NULL COMMENT '操作接口名',
-  `detail` varchar(2000) DEFAULT NULL COMMENT '操作内容',
+  `detail` text COMMENT '操作内容',
   `time` int(11) DEFAULT NULL COMMENT '时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户操作日志';
