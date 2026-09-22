@@ -1,0 +1,1 @@
+function o(n){var r;if(!n||typeof n!="object")return{name:"",index:""};const e=n.paneName??((r=n.props)==null?void 0:r.name)??n.name??"",i=n.index!=null&&n.index!==""?String(n.index):e==="first"?"0":e==="second"?"1":String(e);return{name:e,index:i}}export{o as r};

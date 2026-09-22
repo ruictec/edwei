@@ -640,7 +640,21 @@ CREATE TABLE `gateway_tbl` (
 #
 # Data for table "gateway_tbl"
 #
-
+DROP TABLE IF EXISTS `locate_task_tbl`;
+CREATE TABLE IF NOT EXISTS `locate_task_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) DEFAULT NULL COMMENT '名称',
+  `projectid` char(8) NOT NULL DEFAULT '0' COMMENT '项目编号',
+  `worktypes` text COMMENT '工种类型',
+  `tranches` text COMMENT '告警区域',
+  `memberids` text COMMENT '人员id',
+  `longi` double DEFAULT NULL COMMENT '经度',
+  `lati` double DEFAULT NULL COMMENT '纬度',
+  `begintime` int(11) DEFAULT NULL COMMENT '开始时间',
+  `endtime` int(11) DEFAULT NULL COMMENT '结束时间',
+  `ctime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定位任务';
 
 #
 # Structure for table "map_tbl"
@@ -1115,13 +1129,13 @@ CREATE TABLE `task_info_tbl` (
   `userid` int(11) unsigned NOT NULL COMMENT '员工id',
   `taskid` int(11) NOT NULL COMMENT '任务id',
   `projectid` char(8) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `details` varchar(3000) DEFAULT '' COMMENT '任务详情',
-  `infodetails` varchar(3000) DEFAULT '' COMMENT '巡检过的详情',
+  `details` text COMMENT '任务详情',
+  `infodetails` text COMMENT '巡检过的详情',
   `taskdate` varchar(12) DEFAULT NULL COMMENT '巡检日期',
   `begintime` varchar(8) DEFAULT NULL COMMENT '开始时间',
   `endtime` varchar(8) DEFAULT NULL COMMENT '结束时间',
   `missnum` int(11) DEFAULT NULL COMMENT '漏检个数',
-  `missdetails` varchar(3000) DEFAULT NULL COMMENT '漏检详情',
+  `missdetails` text COMMENT '漏检详情',
   `taskstatus` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='巡检历史';
@@ -1160,7 +1174,7 @@ CREATE TABLE `task_management_tbl` (
   `name` varchar(32) DEFAULT NULL COMMENT '任务名',
   `userids` varchar(320) DEFAULT NULL COMMENT '员工id集合',
   `projectid` char(8) NOT NULL DEFAULT '0' COMMENT '项目编号',
-  `details` varchar(3000) DEFAULT NULL COMMENT '线路详情',
+  `details` text COMMENT '线路详情',
   `repetition` int(11) DEFAULT NULL COMMENT '不重复,每天,每月,每周,每一小时,每两小时,每三小时,每四小时,每五小时,每六小时',
   `daily` varchar(320) DEFAULT NULL COMMENT '(如果repeat是每周或者每月daily用来存储另外设置的信息)',
   `begindate` varchar(12) DEFAULT NULL COMMENT '开始日期',
@@ -1242,8 +1256,8 @@ CREATE TABLE `warning_config_tbl` (
   `postype` int(11) DEFAULT NULL COMMENT 'Ble,GPS',
   `meth` int(1) NOT NULL DEFAULT '0' COMMENT '越界告警触发方式1为进，2为出',
   `cate` int(11) DEFAULT NULL COMMENT '类型：人员,车辆,资产',
-  `worktypes` varchar(320) DEFAULT NULL COMMENT '工种',
-  `tranches` varchar(320) DEFAULT NULL COMMENT '分组名称',
+  `worktypes` text COMMENT '工种',
+  `tranches` text COMMENT '分组名称',
   `begintime` varchar(8) DEFAULT NULL COMMENT '开始时间',
   `endtime` varchar(8) DEFAULT NULL COMMENT '结束时间',
   `warnum` int(11) DEFAULT NULL COMMENT '告警门限(时长或人数)',
