@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.26-log)
-# Date: 2025-10-09 10:02:32
+# Date: 2026-10-22 17:25:54
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -425,6 +425,31 @@ CREATE TABLE `dev_config_v2` (
 
 
 #
+# Structure for table "dev_health_tbl"
+#
+
+DROP TABLE IF EXISTS `dev_health_tbl`;
+CREATE TABLE `dev_health_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deveui` varchar(16) NOT NULL DEFAULT '' COMMENT '设备号',
+  `username` varchar(64) DEFAULT NULL COMMENT '人员名称',
+  `wristeui` varchar(16) DEFAULT NULL COMMENT '手环编号',
+  `heartrate` int(11) DEFAULT NULL COMMENT '心率',
+  `soc` int(11) DEFAULT NULL COMMENT '电量',
+  `tem` double(10,1) DEFAULT NULL COMMENT '体温',
+  `oxygen` int(11) DEFAULT NULL COMMENT '血氧',
+  `time` int(11) DEFAULT NULL COMMENT '时间戳',
+  PRIMARY KEY (`id`),
+  KEY `idx_deveui_time` (`deveui`,`time`),
+  KEY `idx_username_time` (`username`,`time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='健康数据表';
+
+#
+# Data for table "dev_health_tbl"
+#
+
+
+#
 # Structure for table "dev_list_tbl"
 #
 
@@ -580,6 +605,7 @@ CREATE TABLE `fence_manage_tbl` (
   `name` varchar(32) DEFAULT NULL COMMENT '围栏名',
   `flag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '开启状态(false/true)',
   `colour` varchar(16) DEFAULT NULL COMMENT '围栏颜色',
+  `opacity` double NOT NULL DEFAULT '1' COMMENT '透明度，范围0~1，默认1',
   `projectid` varchar(64) DEFAULT NULL COMMENT '所属项目id',
   `groundid` int(10) unsigned DEFAULT NULL COMMENT '楼层编号',
   `time` int(11) DEFAULT NULL COMMENT '创建时间',
@@ -640,8 +666,14 @@ CREATE TABLE `gateway_tbl` (
 #
 # Data for table "gateway_tbl"
 #
+
+
+#
+# Structure for table "locate_task_tbl"
+#
+
 DROP TABLE IF EXISTS `locate_task_tbl`;
-CREATE TABLE IF NOT EXISTS `locate_task_tbl` (
+CREATE TABLE `locate_task_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL COMMENT '名称',
   `projectid` char(8) NOT NULL DEFAULT '0' COMMENT '项目编号',
@@ -650,11 +682,17 @@ CREATE TABLE IF NOT EXISTS `locate_task_tbl` (
   `memberids` text COMMENT '人员id',
   `longi` double DEFAULT NULL COMMENT '经度',
   `lati` double DEFAULT NULL COMMENT '纬度',
+  `status` int(11) DEFAULT '0' COMMENT '状态：0未开始、1开始、2暂停、3结束',
   `begintime` int(11) DEFAULT NULL COMMENT '开始时间',
   `endtime` int(11) DEFAULT NULL COMMENT '结束时间',
   `ctime` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定位任务';
+
+#
+# Data for table "locate_task_tbl"
+#
+
 
 #
 # Structure for table "map_tbl"
@@ -1253,14 +1291,13 @@ CREATE TABLE `warning_config_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `projectid` char(8) NOT NULL DEFAULT '0' COMMENT '项目编号',
   `type` int(11) DEFAULT NULL COMMENT '告警类型：滞留告警,聚集告警,异常静止,越界告警',
-  `postype` int(11) DEFAULT NULL COMMENT 'Ble,GPS',
   `meth` int(1) NOT NULL DEFAULT '0' COMMENT '越界告警触发方式1为进，2为出',
   `cate` int(11) DEFAULT NULL COMMENT '类型：人员,车辆,资产',
   `worktypes` text COMMENT '工种',
   `tranches` text COMMENT '分组名称',
   `begintime` varchar(8) DEFAULT NULL COMMENT '开始时间',
   `endtime` varchar(8) DEFAULT NULL COMMENT '结束时间',
-  `warnum` int(11) DEFAULT NULL COMMENT '告警门限(时长或人数)',
+  `warnum` double DEFAULT NULL,
   `memo` varchar(128) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='告警配置表';
@@ -1290,3 +1327,4 @@ CREATE TABLE `warning_voice_tbl` (
 #
 # Data for table "warning_voice_tbl"
 #
+

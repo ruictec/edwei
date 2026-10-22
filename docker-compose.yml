@@ -121,7 +121,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./configuration/postgresql/initdb:/docker-entrypoint-initdb.d
-      - postgresqldata:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=chirpstack
       - POSTGRES_PASSWORD=chirpstack
@@ -154,10 +154,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Ru44q1GwXMjjLT
       MYSQL_DATABASE: rct_iot
+      LANG: C.UTF-8
     volumes:
       - ./data/mysql/:/var/lib/mysql/
       - ./log/mysql/:/var/log/mysql/
       - ./configuration/mysql/init/:/docker-entrypoint-initdb.d/
+    command: 
+      - --defaults-file=/etc/my.cnf
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
 
-volumes:
-  postgresqldata:
