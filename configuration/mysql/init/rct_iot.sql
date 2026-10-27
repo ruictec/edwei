@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.26-log)
-# Date: 2026-10-22 17:25:54
+# Date: 2026-10-27 15:47:30
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -229,6 +229,8 @@ CREATE TABLE `customer_tbox_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sn` varchar(32) NOT NULL DEFAULT '' COMMENT '车牌号',
   `type` varchar(32) DEFAULT NULL COMMENT '车型',
+  `driver` varchar(64) DEFAULT NULL COMMENT '司机名称',
+  `tel` varchar(32) DEFAULT NULL COMMENT '联系电话',
   `tenantid` char(8) DEFAULT NULL COMMENT '所属公司',
   `projectid` varchar(8) DEFAULT NULL COMMENT '项目编号',
   `depart` varchar(32) DEFAULT NULL COMMENT '所属部门',
@@ -609,6 +611,8 @@ CREATE TABLE `fence_manage_tbl` (
   `projectid` varchar(64) DEFAULT NULL COMMENT '所属项目id',
   `groundid` int(10) unsigned DEFAULT NULL COMMENT '楼层编号',
   `time` int(11) DEFAULT NULL COMMENT '创建时间',
+  `principal` varchar(64) DEFAULT NULL COMMENT '负责人',
+  `tel` varchar(32) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_name` (`name`,`projectid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='围栏表';
@@ -706,10 +710,10 @@ CREATE TABLE `map_tbl` (
   `maptype` int(11) DEFAULT NULL,
   `mapkey` varchar(64) DEFAULT NULL COMMENT '3D蜂鸟地图key',
   `appname` varchar(32) DEFAULT NULL COMMENT '3D地图应用名',
-  `width` int(11) NOT NULL DEFAULT '0' COMMENT '2D地图像素/3D地图的最小y坐标值',
-  `length` int(11) NOT NULL DEFAULT '0' COMMENT '2D地图像素/3D地图的最小x坐标值',
-  `realwidth` int(11) NOT NULL DEFAULT '0' COMMENT '2D地图实际宽/3D地图的最大y坐标值',
-  `reallength` int(11) NOT NULL DEFAULT '0' COMMENT '2D地图实际长/3D地图的最大x坐标值',
+  `width` double(12,2) NOT NULL DEFAULT '0.00' COMMENT '2D地图像素/3D地图的最小y坐标值',
+  `length` double(12,2) NOT NULL DEFAULT '0.00' COMMENT '2D地图像素/3D地图的最小x坐标值',
+  `realwidth` double(12,2) NOT NULL DEFAULT '0.00' COMMENT '2D地图实际宽/3D地图的最大y坐标值',
+  `reallength` double(12,2) NOT NULL DEFAULT '0.00' COMMENT '2D地图实际长/3D地图的最大x坐标值',
   `distance` int(4) NOT NULL DEFAULT '0' COMMENT '精度：位置变动的距离值',
   `active` double(2,1) NOT NULL DEFAULT '0.0' COMMENT '活跃度',
   `scale` int(11) unsigned NOT NULL DEFAULT '1' COMMENT '地图缩放比例：真实地图/地图',
@@ -951,6 +955,8 @@ CREATE TABLE `project_config_tbl` (
   `outDoor` tinyint(1) NOT NULL DEFAULT '1' COMMENT '室外定位',
   `inDoor` tinyint(1) NOT NULL DEFAULT '1' COMMENT '室内定位',
   `attenFlag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '3级用户显示考勤还是信标状态(true:考勤)',
+  `locateManage` tinyint(1) NOT NULL DEFAULT '0' COMMENT '任务管理',
+  `audio` tinyint(1) NOT NULL DEFAULT '0' COMMENT '录音管理',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='项目功能配置表';
 
@@ -1073,7 +1079,7 @@ CREATE TABLE `qpb7ja9k_status_record_tbl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tenantid` varchar(16) DEFAULT NULL COMMENT '公司识别号',
   `deveui` varchar(16) NOT NULL,
-  `vibstate` enum('static','move') DEFAULT 'static' COMMENT '运动状态',
+  `vibstate` int(11) DEFAULT NULL COMMENT '运动状态',
   `steps` int(11) DEFAULT NULL COMMENT '步数',
   `battery` int(11) DEFAULT NULL,
   `vol` tinyint(4) DEFAULT NULL COMMENT '电量',
@@ -1154,6 +1160,34 @@ CREATE TABLE `qpb7ja9k_warning_tbl` (
 
 #
 # Data for table "qpb7ja9k_warning_tbl"
+#
+
+
+#
+# Structure for table "run_info_tbl"
+#
+
+DROP TABLE IF EXISTS `run_info_tbl`;
+CREATE TABLE `run_info_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) DEFAULT NULL COMMENT '用户名',
+  `deveui` varchar(16) NOT NULL DEFAULT '' COMMENT '设备号',
+  `tenantid` varchar(16) DEFAULT NULL COMMENT '公司编号',
+  `projectid` varchar(8) DEFAULT NULL COMMENT '项目编号',
+  `laststeps` int(11) DEFAULT NULL COMMENT '当前总步数',
+  `steps` int(11) DEFAULT NULL COMMENT '步数',
+  `lastvibstate` int(11) DEFAULT NULL COMMENT '当前总运动次数',
+  `vibstate` int(11) DEFAULT NULL COMMENT '运动次数',
+  `stepdate` varchar(16) NOT NULL DEFAULT '' COMMENT '日期',
+  `time` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `uk_deveui_stepdate` (`deveui`,`stepdate`),
+  KEY `idx_tenantid_stepdate` (`tenantid`,`stepdate`),
+  KEY `idx_projectid_stepdate` (`projectid`,`stepdate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='运行信息表';
+
+#
+# Data for table "run_info_tbl"
 #
 
 
@@ -1299,6 +1333,8 @@ CREATE TABLE `warning_config_tbl` (
   `endtime` varchar(8) DEFAULT NULL COMMENT '结束时间',
   `warnum` double DEFAULT NULL,
   `memo` varchar(128) DEFAULT NULL COMMENT '备注',
+  `principal` varchar(64) DEFAULT NULL COMMENT '负责人',
+  `tel` varchar(32) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='告警配置表';
 
