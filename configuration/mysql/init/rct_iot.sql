@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.26-log)
-# Date: 2026-10-27 15:47:30
+# Date: 2026-10-29 16:51:35
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -1331,7 +1331,7 @@ CREATE TABLE `warning_config_tbl` (
   `tranches` text COMMENT '分组名称',
   `begintime` varchar(8) DEFAULT NULL COMMENT '开始时间',
   `endtime` varchar(8) DEFAULT NULL COMMENT '结束时间',
-  `warnum` double DEFAULT NULL,
+  `warnum` varchar(64) DEFAULT NULL COMMENT '告警门限。聚集为人数档位，逗号分隔如3,4,6；其它类型为数值',
   `memo` varchar(128) DEFAULT NULL COMMENT '备注',
   `principal` varchar(64) DEFAULT NULL COMMENT '负责人',
   `tel` varchar(32) DEFAULT NULL COMMENT '电话',
@@ -1340,6 +1340,63 @@ CREATE TABLE `warning_config_tbl` (
 
 #
 # Data for table "warning_config_tbl"
+#
+
+
+#
+# Structure for table "warning_point_tbl"
+#
+
+DROP TABLE IF EXISTS `warning_point_tbl`;
+CREATE TABLE `warning_point_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `warningid` int(11) NOT NULL COMMENT '告警id，对应warning_tbl.id',
+  `deveui` varchar(16) DEFAULT NULL COMMENT '设备编号',
+  `username` varchar(600) DEFAULT NULL COMMENT '员工姓名',
+  `x` double(20,8) DEFAULT NULL COMMENT '人所在地图经度投影',
+  `y` double(20,8) DEFAULT NULL COMMENT '人所在地图纬度投影',
+  `gpstime` int(11) DEFAULT NULL COMMENT '在当前位置的时间',
+  `time` int(11) DEFAULT NULL COMMENT '与warning_tbl.time相同',
+  PRIMARY KEY (`id`),
+  KEY `idx_warningid` (`warningid`),
+  KEY `idx_time` (`time`),
+  KEY `idx_deveui` (`deveui`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='告警位置点';
+
+#
+# Data for table "warning_point_tbl"
+#
+
+
+#
+# Structure for table "warning_tbl"
+#
+
+DROP TABLE IF EXISTS `warning_tbl`;
+CREATE TABLE `warning_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tenantid` varchar(16) DEFAULT NULL COMMENT '公司识别号',
+  `deveui` varchar(16) DEFAULT NULL COMMENT '设备编号',
+  `username` text COMMENT '员工姓名',
+  `projectid` varchar(8) DEFAULT NULL COMMENT '所属项目id',
+  `type` int(11) DEFAULT NULL,
+  `warnid` int(11) DEFAULT NULL COMMENT '触发告警的告警配置id',
+  `status` int(11) DEFAULT NULL,
+  `buildid` int(11) unsigned DEFAULT NULL COMMENT '楼栋编号',
+  `groundid` int(11) unsigned DEFAULT NULL COMMENT '楼层编号',
+  `tranchid` int(11) unsigned DEFAULT NULL COMMENT '告警区域id',
+  `tranche` varchar(32) DEFAULT NULL COMMENT '告警区域',
+  `devtype` int(11) DEFAULT NULL,
+  `postype` int(11) DEFAULT NULL,
+  `time` int(11) DEFAULT NULL COMMENT '时间',
+  `statustime` int(11) DEFAULT NULL COMMENT '消除告警的时间',
+  `memo` varchar(128) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_tenantid_deveui` (`tenantid`,`deveui`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='告警事件';
+
+#
+# Data for table "warning_tbl"
 #
 
 
