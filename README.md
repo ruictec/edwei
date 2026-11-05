@@ -2,7 +2,7 @@
 
 - 1. 安装Docker
 - 2. 安装Docker-compose
-- 3. 从 [GitHub Releases](https://github.com/ruictec/edwei/releases) 下载后端 JAR，放到 `/edwei/file/` 目录
+- 3. 从 https://www.rctiot.com/rct/edwei/edwei.tar.gz 下载后端包，解压后将 JAR 放到 `/edwei/file/` 目录
 - 4. 将/edwei/.env文件中EUREKA_SERVER_IP修改成本地ip
 - 5. 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
 - 6. 部署edwei定位服务
@@ -39,15 +39,11 @@
 
 ### 安装
 
-1. 克隆本仓库
-2. 从 [GitHub Releases](https://github.com/ruictec/edwei/releases) 下载最新后端 JAR，放到 `file/` 目录（见下方「后端 JAR 下载」）
-3. 按「重要说明」修改配置后执行「部署步骤」
-
 ## 重要说明
 
 - 使用root权限进行操作
 - 构建项目需要在edwei目录下操作
-- 构建前必须将 Releases 中的 JAR 放到 `file/` 目录，否则 `docker-compose build` 会失败
+- 构建前必须将 `edwei.tar.gz` 解压后的 JAR 放到 `file/` 目录，否则 `docker-compose build` 会失败
 - 确保端口没有冲突
 - 确保redis文件的操作权限
 - 修改/edwei/configuration/nginx/nginx.conf文件中的地址example.com
@@ -69,34 +65,14 @@
 
 ## 后端 JAR 下载
 
-因单个 JAR 体积可能超过 GitHub 仓库限制，后端产物通过 [GitHub Releases](https://github.com/ruictec/edwei/releases) 发布，不随 Git 仓库完整分发最新包。
-
-部署前请下载对应版本附件，并放到 `edwei/file/` 目录，文件名需与下列一致：
-
-| 文件名 | 说明 |
-|--------|------|
-| `rct-eureka-0.0.1.jar` | 注册中心 |
-| `rct-service-0.0.1.jar` | 业务服务 |
-| `rct-zuul-0.0.1.jar` | 网关 |
-
-示例（将 `VERSION` 换成 Releases 中的实际 tag，如 `v1.0.0`）：
-
-```bash
-# 进入项目 file 目录
-cd edwei/file
-
-# 从 Release 下载（也可浏览器打开 Releases 页面手动下载后放入本目录）
-# https://github.com/ruictec/edwei/releases/download/VERSION/rct-eureka-0.0.1.jar
-# https://github.com/ruictec/edwei/releases/download/VERSION/rct-service-0.0.1.jar
-# https://github.com/ruictec/edwei/releases/download/VERSION/rct-zuul-0.0.1.jar
-```
-
-确认 `file/` 下三个 JAR 就绪后，再执行下方部署步骤。
+- 部署前请在/edwei/file/目录下载 [edwei.tar.gz]
+- 下载命令为：curl -O https://www.rctiot.com/rct/edwei/edwei.tar.gz
+- 解压出的 JAR，命令为：tar -xzf edwei.tar.gz
 
 ## 部署步骤
 
 ```
-# 确认 file/ 目录已放置 Releases 下载的 JAR
+# 确认 file/ 目录已放置解压后的 JAR
 # 构建镜像
 docker-compose build
 # 启动容器
@@ -126,7 +102,7 @@ edwei/
 │     ├── mysql/
 │     ├── postgresql/
 │     └── redis/
-├── file/                # Docker 构建上下文（JAR 从 Releases 下载放入）
+├── file/                # Docker 构建上下文（JAR 从 edweiJar.tar.gz 解压后放入）
 │     ├── rct-eureka-0.0.1.jar
 │     ├── rct-service-0.0.1.jar
 │     ├── rct-zuul-0.0.1.jar
@@ -149,8 +125,8 @@ edwei/
 ## 项目下载
 
 - 源码仓库：https://github.com/ruictec/edwei
-- 后端 JAR（Releases）：https://github.com/ruictec/edwei/releases
-- 克隆仓库后，务必从 Releases 下载 JAR 到 `file/`，再执行 `docker-compose build`
+- 后端 JAR：https://www.rctiot.com/rct/edweiJar.tar.gz
+- 克隆仓库后，务必下载并解压 `edweiJar.tar.gz`，将 JAR 放到 `file/`，再执行 `docker-compose build`
 
 ## API接口
 

@@ -2,18 +2,19 @@
 
 - 1. Install Docker
 - 2. Install Docker Compose
-- 3. Download the backend JARs from [GitHub Releases](https://github.com/ruictec/edwei/releases) and place them in the `/edwei/file/` directory
+- 3. Download the backend package from https://www.rctiot.com/rct/edwei/edwei.tar.gz, extract it, and place the JARs in the `/edwei/file/` directory
 - 4. Change the value of EUREKA_SERVER_IP in the /edwei/.env file to the local IP address
-- 5. Deploy the Edwei positioning service
-- 6. Log in with the ChirpStack administrator account, create and record the API key on the Network Server API Key page
-- 7. Log in with the super admin account of the positioning platform, add LNS information and create secondary company information
-- 8. Register an administrator account for the secondary company
-- 9. Log in with the secondary company administrator account to create tertiary companies, tertiary company user accounts, and projects
-- 10. Modify the base station data address to the local IP address
-- 11. Log in with the super admin account of the positioning platform, add information of base stations, terminal devices and beacons
-- 12. Log in with the secondary company administrator account to assign terminal devices and beacons to corresponding projects
-- 13. Log in with the tertiary company user account to upload and submit maps
-- 14. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
+- 5. Modify the Tianditu configuration of VUE_APP_TIANDITU_KEY in the /edwei/configuration/nginx/html/static/config.js file
+- 6. Deploy the Edwei positioning service
+- 7. Log in with the ChirpStack administrator account, create and record the API key on the Network Server API Key page
+- 8. Log in with the super admin account of the positioning platform, add LNS information and create secondary company information
+- 9. Register an administrator account for the secondary company
+- 10. Log in with the secondary company administrator account to create tertiary companies, tertiary company user accounts, and projects
+- 11. Modify the base station data address to the local IP address
+- 12. Log in with the super admin account of the positioning platform, add information of base stations, terminal devices and beacons
+- 13. Log in with the secondary company administrator account to assign terminal devices and beacons to corresponding projects
+- 14. Log in with the tertiary company user account to upload and submit maps
+- 15. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
 
 ## Registration Code
 - 1. When the page displays the following message, the registration code needs to be updated.
@@ -39,14 +40,14 @@
 ### Installation
 
 1. Clone this repository
-2. Download the latest backend JARs from [GitHub Releases](https://github.com/ruictec/edwei/releases) into the `file/` directory (see **Backend JAR Download** below)
+2. Download the backend package from https://www.rctiot.com/rct/edweiJar.tar.gz, extract `edweiJar.tar.gz`, and place the JARs into the `file/` directory (see **Backend JAR Download** below)
 3. Update configuration as described in **Important Notes**, then follow **Deployment Steps**
 
 ## Important Notes
 
 - Use root privileges for operations
 - Project building needs to be done in the edwei directory
-- Before building, place the Release JARs in the `file/` directory; otherwise `docker-compose build` will fail
+- Before building, extract `edwei.tar.gz` and place the JARs in the `file/` directory; otherwise `docker-compose build` will fail
 - Ensure no port conflicts
 - Ensure proper file permissions for redis files
 - Modify the address example.com in /edwei/configuration/nginx/nginx.conf file
@@ -60,34 +61,14 @@
 
 ## Backend JAR Download
 
-Because individual JAR files may exceed GitHub’s repository size limit, backend artifacts are published via [GitHub Releases](https://github.com/ruictec/edwei/releases) instead of being fully distributed with the latest packages in Git.
-
-Before deployment, download the assets for the matching release and place them in the `edwei/file/` directory. File names must match exactly:
-
-| File name | Description |
-|-----------|-------------|
-| `rct-eureka-0.0.1.jar` | Registry |
-| `rct-service-0.0.1.jar` | Business service |
-| `rct-zuul-0.0.1.jar` | Gateway |
-
-Example (replace `VERSION` with the actual release tag, e.g. `v1.0.0`):
-
-```bash
-# Enter the project file directory
-cd edwei/file
-
-# Download from the Release (or open the Releases page in a browser and download manually into this directory)
-# https://github.com/ruictec/edwei/releases/download/VERSION/rct-eureka-0.0.1.jar
-# https://github.com/ruictec/edwei/releases/download/VERSION/rct-service-0.0.1.jar
-# https://github.com/ruictec/edwei/releases/download/VERSION/rct-zuul-0.0.1.jar
-```
-
-Confirm all three JARs are present under `file/`, then continue with the deployment steps below.
+- Before deployment, download [edwei.tar.gz] into the /edwei/file/ directory
+- Download command: curl -O https://www.rctiot.com/rct/edwei/edwei.tar.gz
+- Extract the JARs with: tar -xzf edwei.tar.gz
 
 ## Deployment Steps
 
 ```
-# Ensure Release JARs are placed under file/
+# Ensure the extracted JARs are placed under file/
 # Build images
 docker-compose build
 # Start containers
@@ -117,7 +98,7 @@ edwei/
 │     ├── mysql/
 │     ├── postgresql/
 │     └── redis/
-├── file/                # Docker build context (download JARs from Releases here)
+├── file/                # Docker build context (place JARs extracted from edweiJar.tar.gz here)
 │     ├── rct-eureka-0.0.1.jar
 │     ├── rct-service-0.0.1.jar
 │     ├── rct-zuul-0.0.1.jar
@@ -140,8 +121,8 @@ edwei/
 ## Project Download
 
 - Source repository: https://github.com/ruictec/edwei
-- Backend JARs (Releases): https://github.com/ruictec/edwei/releases
-- After cloning, download the JARs from Releases into `file/`, then run `docker-compose build`
+- Backend JARs: https://www.rctiot.com/rct/edwei/edwei.tar.gz
+- After cloning, download and extract `edwei.tar.gz`, place the JARs into `file/`, then run `docker-compose build`
 
 ## API Interface
 
