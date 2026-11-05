@@ -63,6 +63,12 @@
 - 在【注册】->【登录】->【服务中心控制台】->【应用管理】->【我的应用】页面，创建新应用后，获取应用密钥
 - 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
 
+## 短信服务配置
+
+- 开通百度云短信服务，搜索 SMS，创建资质信息、签名信息、模板信息
+- 模板信息为：`${name}触发${alarmtype}警报，请立即查看处理。`
+- 修改/edwei/.env文件中的短信相关配置（`SMS_ENABLED`、`SMS_ACCESS_KEY_ID`、`SMS_SECRET_ACCESS_KEY`、`SMS_SIGNATURE_ID`、`SMS_ALARM_TEMPLATE_ID`）
+
 ## 后端 JAR 下载
 
 - 部署前请在/edwei/file/目录下载 [edwei.tar.gz]
