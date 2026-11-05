@@ -2,18 +2,19 @@
 
 - 1. 安装Docker
 - 2. 安装Docker-compose
-- 3. 将/edwei/.env文件中EUREKA_SERVER_IP修改成本地ip
-- 4. 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
-- 5. 部署edwei定位服务
-- 6. 用ChirpStacK管理员账号在Network Server下面的API key界面创建并记录key
-- 7. 用定位平台的admin超级管理员账号添加LNS信息、创建二级公司信息
-- 8. 注册二级公司管理员账号
-- 9. 用二级公司管理员账号创建三级公司、三级公司用户账号、项目
-- 10. 将基站数据地址改成本地ip
-- 11. 用定位平台的admin超级管理员账号添加基站信息、终端设备信息、信标信息
-- 12. 用二级公司管理员账号分配终端设备、信标至项目
-- 13. 用三级公司用户账号上传提交地图
-- 14. 用三级公司用户账号创建楼栋、楼层、部署信标、创建人员信息
+- 3. 从 [GitHub Releases](https://github.com/ruictec/edwei/releases) 下载后端 JAR，放到 `/edwei/file/` 目录
+- 4. 将/edwei/.env文件中EUREKA_SERVER_IP修改成本地ip
+- 5. 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
+- 6. 部署edwei定位服务
+- 7. 用ChirpStacK管理员账号在Network Server下面的API key界面创建并记录key
+- 8. 用定位平台的admin超级管理员账号添加LNS信息、创建二级公司信息
+- 9. 注册二级公司管理员账号
+- 10. 用二级公司管理员账号创建三级公司、三级公司用户账号、项目
+- 11. 将基站数据地址改成本地ip
+- 12. 用定位平台的admin超级管理员账号添加基站信息、终端设备信息、信标信息
+- 13. 用二级公司管理员账号分配终端设备、信标至项目
+- 14. 用三级公司用户账号上传提交地图
+- 15. 用三级公司用户账号创建楼栋、楼层、部署信标、创建人员信息
 
 ## 注册码
 - 1. 当页面提示以下信息时，需要更新注册码
@@ -38,10 +39,15 @@
 
 ### 安装
 
+1. 克隆本仓库
+2. 从 [GitHub Releases](https://github.com/ruictec/edwei/releases) 下载最新后端 JAR，放到 `file/` 目录（见下方「后端 JAR 下载」）
+3. 按「重要说明」修改配置后执行「部署步骤」
+
 ## 重要说明
 
 - 使用root权限进行操作
 - 构建项目需要在edwei目录下操作
+- 构建前必须将 Releases 中的 JAR 放到 `file/` 目录，否则 `docker-compose build` 会失败
 - 确保端口没有冲突
 - 确保redis文件的操作权限
 - 修改/edwei/configuration/nginx/nginx.conf文件中的地址example.com
@@ -61,9 +67,36 @@
 - 在【注册】->【登录】->【服务中心控制台】->【应用管理】->【我的应用】页面，创建新应用后，获取应用密钥
 - 修改/edwei/configuration/nginx/html/static/config.js文件中VUE_APP_TIANDITU_KEY的天地图配置
 
+## 后端 JAR 下载
+
+因单个 JAR 体积可能超过 GitHub 仓库限制，后端产物通过 [GitHub Releases](https://github.com/ruictec/edwei/releases) 发布，不随 Git 仓库完整分发最新包。
+
+部署前请下载对应版本附件，并放到 `edwei/file/` 目录，文件名需与下列一致：
+
+| 文件名 | 说明 |
+|--------|------|
+| `rct-eureka-0.0.1.jar` | 注册中心 |
+| `rct-service-0.0.1.jar` | 业务服务 |
+| `rct-zuul-0.0.1.jar` | 网关 |
+
+示例（将 `VERSION` 换成 Releases 中的实际 tag，如 `v1.0.0`）：
+
+```bash
+# 进入项目 file 目录
+cd edwei/file
+
+# 从 Release 下载（也可浏览器打开 Releases 页面手动下载后放入本目录）
+# https://github.com/ruictec/edwei/releases/download/VERSION/rct-eureka-0.0.1.jar
+# https://github.com/ruictec/edwei/releases/download/VERSION/rct-service-0.0.1.jar
+# https://github.com/ruictec/edwei/releases/download/VERSION/rct-zuul-0.0.1.jar
+```
+
+确认 `file/` 下三个 JAR 就绪后，再执行下方部署步骤。
+
 ## 部署步骤
 
 ```
+# 确认 file/ 目录已放置 Releases 下载的 JAR
 # 构建镜像
 docker-compose build
 # 启动容器
@@ -93,7 +126,12 @@ edwei/
 │     ├── mysql/
 │     ├── postgresql/
 │     └── redis/
-├── file/
+├── file/                # Docker 构建上下文（JAR 从 Releases 下载放入）
+│     ├── rct-eureka-0.0.1.jar
+│     ├── rct-service-0.0.1.jar
+│     ├── rct-zuul-0.0.1.jar
+│     ├── eurekafile / servicefile / zuulfile
+│     └── *.sh
 │
 ├── config/              # 证书配置目录
 │   └── config.properties
@@ -109,6 +147,10 @@ edwei/
 ```
 
 ## 项目下载
+
+- 源码仓库：https://github.com/ruictec/edwei
+- 后端 JAR（Releases）：https://github.com/ruictec/edwei/releases
+- 克隆仓库后，务必从 Releases 下载 JAR 到 `file/`，再执行 `docker-compose build`
 
 ## API接口
 
