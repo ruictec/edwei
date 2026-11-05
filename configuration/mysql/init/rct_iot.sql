@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.26-log)
-# Date: 2026-10-29 16:51:35
+# Date: 2026-11-05 15:13:02
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -1174,6 +1174,7 @@ CREATE TABLE `run_info_tbl` (
   `deveui` varchar(16) NOT NULL DEFAULT '' COMMENT '设备号',
   `tenantid` varchar(16) DEFAULT NULL COMMENT '公司编号',
   `projectid` varchar(8) DEFAULT NULL COMMENT '项目编号',
+  `stattype` int(11) DEFAULT '0' COMMENT '统计类型：0小时，1天',
   `laststeps` int(11) DEFAULT NULL COMMENT '当前总步数',
   `steps` int(11) DEFAULT NULL COMMENT '步数',
   `lastvibstate` int(11) DEFAULT NULL COMMENT '当前总运动次数',
@@ -1361,7 +1362,7 @@ CREATE TABLE `warning_point_tbl` (
   KEY `idx_warningid` (`warningid`),
   KEY `idx_time` (`time`),
   KEY `idx_deveui` (`deveui`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='告警位置点';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='告警位置点';
 
 #
 # Data for table "warning_point_tbl"
@@ -1393,7 +1394,7 @@ CREATE TABLE `warning_tbl` (
   `memo` varchar(128) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   KEY `idx_tenantid_deveui` (`tenantid`,`deveui`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='告警事件';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='告警事件';
 
 #
 # Data for table "warning_tbl"
