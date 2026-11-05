@@ -98,7 +98,7 @@ edwei/
 │     ├── mysql/
 │     ├── postgresql/
 │     └── redis/
-├── file/                # Docker build context (place JARs extracted from edweiJar.tar.gz here)
+├── file/                # Docker build context (place JARs extracted from edwei.tar.gz here)
 │     ├── rct-eureka-0.0.1.jar
 │     ├── rct-service-0.0.1.jar
 │     ├── rct-zuul-0.0.1.jar
@@ -121,8 +121,6 @@ edwei/
 ## Project Download
 
 - Source repository: https://github.com/ruictec/edwei
-- Backend JARs: https://www.rctiot.com/rct/edwei/edwei.tar.gz
-- After cloning, download and extract `edwei.tar.gz`, place the JARs into `file/`, then run `docker-compose build`
 
 ## API Interface
 
