@@ -108,7 +108,7 @@ edwei/
 │     ├── mysql/
 │     ├── postgresql/
 │     └── redis/
-├── file/                # Docker 构建上下文（JAR 从 edweiJar.tar.gz 解压后放入）
+├── file/                # Docker 构建上下文（JAR 从 edwei.tar.gz 解压后放入）
 │     ├── rct-eureka-0.0.1.jar
 │     ├── rct-service-0.0.1.jar
 │     ├── rct-zuul-0.0.1.jar
@@ -131,8 +131,6 @@ edwei/
 ## 项目下载
 
 - 源码仓库：https://github.com/ruictec/edwei
-- 后端 JAR：https://www.rctiot.com/rct/edweiJar.tar.gz
-- 克隆仓库后，务必下载并解压 `edweiJar.tar.gz`，将 JAR 放到 `file/`，再执行 `docker-compose build`
 
 ## API接口
 
