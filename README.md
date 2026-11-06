@@ -146,12 +146,10 @@ edwei/
 - 登录平台在用户管理中公司信息列表中获取tenantid、tenantkey
 - get请求siginfo值：path + tenantkey + ts的SHA1加密信息
 - 非get请求siginfo值：path + body + tenantkey + ts的SHA1加密信息
-- path示例：/v1/devices/xxxx
+- path示例：/v1/service/xxxx
 
 **接口地址**  
-- 用户模块地址为：/v1/user/xxxx
-- 设备模块地址为：/v1/devices/xxxx
-- 定位模块地址为：/v1/map/xxxx
+- 地址为：/v1/service/xxxx
 
 ## ChirpStacK
 

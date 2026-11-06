@@ -4,17 +4,16 @@
 - 2. Install Docker Compose
 - 3. Download the backend package from https://www.rctiot.com/rct/edwei/edwei.tar.gz, extract it, and place the JARs in the `/edwei/file/` directory
 - 4. Change the value of EUREKA_SERVER_IP in the /edwei/.env file to the local IP address
-- 5. Modify the Tianditu configuration of VUE_APP_TIANDITU_KEY in the /edwei/configuration/nginx/html/static/config.js file
-- 6. Deploy the Edwei positioning service
-- 7. Log in with the ChirpStack administrator account, create and record the API key on the Network Server API Key page
-- 8. Log in with the super admin account of the positioning platform, add LNS information and create secondary company information
-- 9. Register an administrator account for the secondary company
-- 10. Log in with the secondary company administrator account to create tertiary companies, tertiary company user accounts, and projects
-- 11. Modify the base station data address to the local IP address
-- 12. Log in with the super admin account of the positioning platform, add information of base stations, terminal devices and beacons
-- 13. Log in with the secondary company administrator account to assign terminal devices and beacons to corresponding projects
-- 14. Log in with the tertiary company user account to upload and submit maps
-- 15. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
+- 5. Deploy the Edwei positioning service
+- 6. Log in with the ChirpStack administrator account, create and record the API key on the Network Server API Key page
+- 7. Log in with the super admin account of the positioning platform, add LNS information and create secondary company information
+- 8. Register an administrator account for the secondary company
+- 9. Log in with the secondary company administrator account to create tertiary companies, tertiary company user accounts, and projects
+- 10. Modify the base station data address to the local IP address
+- 11. Log in with the super admin account of the positioning platform, add information of base stations, terminal devices and beacons
+- 12. Log in with the secondary company administrator account to assign terminal devices and beacons to corresponding projects
+- 13. Log in with the tertiary company user account to upload and submit maps
+- 14. Log in with the tertiary company user account to create buildings and floors, deploy beacons, and add personnel information
 
 ## Registration Code
 - 1. When the page displays the following message, the registration code needs to be updated.
@@ -38,10 +37,6 @@
 - Docker-compose
 
 ### Installation
-
-1. Clone this repository
-2. Download the backend package from https://www.rctiot.com/rct/edweiJar.tar.gz, extract `edweiJar.tar.gz`, and place the JARs into the `file/` directory (see **Backend JAR Download** below)
-3. Update configuration as described in **Important Notes**, then follow **Deployment Steps**
 
 ## Important Notes
 
@@ -136,12 +131,10 @@ edwei/
 - Login platform to get tenantid and tenantkey from company information list in user management
 - For GET requests, siginfo value: SHA1 encryption of path + tenantkey + ts
 - For non-GET requests, siginfo value: SHA1 encryption of path + body + tenantkey + ts
-- Path example: /v1/devices/xxxx
+- Path example: /v1/service/xxxx
 
 **Interface Address**  
-- User module address: /v1/user/xxxx
-- Device module address: /v1/devices/xxxx
-- Location module address: /v1/map/xxxx
+- address: /v1/service/xxxx
 
 ## ChirpStack
 
