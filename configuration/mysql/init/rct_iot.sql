@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.7.26-log)
-# Date: 2026-11-05 15:13:02
+# Date: 2026-11-12 18:29:06
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -614,7 +614,7 @@ CREATE TABLE `fence_manage_tbl` (
   `principal` varchar(64) DEFAULT NULL COMMENT '负责人',
   `tel` varchar(32) DEFAULT NULL COMMENT '电话',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_name` (`name`,`projectid`)
+  UNIQUE KEY `unique_name` (`name`,`projectid`,`groundid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='围栏表';
 
 #
@@ -1370,6 +1370,42 @@ CREATE TABLE `warning_point_tbl` (
 
 
 #
+# Structure for table "warning_stat_tbl"
+#
+
+DROP TABLE IF EXISTS `warning_stat_tbl`;
+CREATE TABLE `warning_stat_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '名称',
+  `tenantid` varchar(16) NOT NULL DEFAULT '' COMMENT '公司编号',
+  `projectid` varchar(8) NOT NULL DEFAULT '' COMMENT '项目编号',
+  `warndate` varchar(10) NOT NULL DEFAULT '' COMMENT '日期，如2026-10-24',
+  `sos` int(11) NOT NULL DEFAULT '0' COMMENT 'SOS告警数量，warning_tbl.type=1',
+  `gather` int(11) NOT NULL DEFAULT '0' COMMENT '聚集告警数量，warning_tbl.type=2',
+  `crossline` int(11) NOT NULL DEFAULT '0' COMMENT '越界告警数量，warning_tbl.type=3',
+  `stay` int(11) NOT NULL DEFAULT '0' COMMENT '滞留告警数量，warning_tbl.type=4',
+  `still` int(11) NOT NULL DEFAULT '0' COMMENT '异常静止数量，warning_tbl.type=5',
+  `tilt` int(11) NOT NULL DEFAULT '0' COMMENT '倾斜告警数量，warning_tbl.type=6',
+  `dump` int(11) NOT NULL DEFAULT '0' COMMENT '倾倒告警数量，warning_tbl.type=7',
+  `fire` int(11) NOT NULL DEFAULT '0' COMMENT '火灾告警数量，warning_tbl.type=8',
+  `contact` int(11) NOT NULL DEFAULT '0' COMMENT '接触告警数量，warning_tbl.type=9',
+  `door` int(11) NOT NULL DEFAULT '0' COMMENT '开门告警数量，warning_tbl.type=10',
+  `lowbat` int(11) NOT NULL DEFAULT '0' COMMENT '低电告警数量，warning_tbl.type=11',
+  `heartrate` int(11) NOT NULL DEFAULT '0' COMMENT '心率异常数量，warning_tbl.type=12',
+  `temperature` int(11) NOT NULL DEFAULT '0' COMMENT '体温异常数量，warning_tbl.type=13',
+  `time` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_project_date` (`username`,`projectid`,`warndate`),
+  KEY `idx_tenantid_warndate` (`tenantid`,`warndate`),
+  KEY `idx_projectid_warndate` (`projectid`,`warndate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='告警统计表';
+
+#
+# Data for table "warning_stat_tbl"
+#
+
+
+#
 # Structure for table "warning_tbl"
 #
 
@@ -1391,6 +1427,7 @@ CREATE TABLE `warning_tbl` (
   `postype` int(11) DEFAULT NULL,
   `time` int(11) DEFAULT NULL COMMENT '时间',
   `statustime` int(11) DEFAULT NULL COMMENT '消除告警的时间',
+  `checktime` int(11) DEFAULT NULL COMMENT '核对时间',
   `memo` varchar(128) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   KEY `idx_tenantid_deveui` (`tenantid`,`deveui`)

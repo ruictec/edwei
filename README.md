@@ -25,9 +25,11 @@
 ## 技术栈
 
 - **后端框架**：Spring Boot 2.1.8, Spring Cloud Greenwich.SR2
-- **数据库**：MySQL 8.0, Redis 缓存
+- **数据库**：MySQL 5.7，PostgreSQL 14，Redis 7
 - **ORM框架**：MyBatis 1.3.2
-- **消息队列**：MQTT
+- **消息队列**：Eclipse Mosquitto 2
+- **Web 服务**：Nginx 1.31.0
+- **LoRaWAN**：ChirpStack 4.19.0，ChirpStack Gateway Bridge 4.1.0，ChirpStack REST API 4.19.0
 - **日志框架**：Log4j2
 - **部署工具**：Docker-compose
 

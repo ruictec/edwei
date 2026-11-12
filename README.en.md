@@ -24,9 +24,11 @@
 ## Technology Stack
 
 - **Backend Framework**: Spring Boot 2.1.8, Spring Cloud Greenwich.SR2
-- **Database**: MySQL 8.0, Redis Cache
+- **Database**: MySQL 5.7, PostgreSQL 14, Redis 7
 - **ORM Framework**: MyBatis 1.3.2
-- **Message Queue**: MQTT
+- **Message Queue**: Eclipse Mosquitto 2
+- **Web Server**: Nginx 1.31.0
+- **LoRaWAN**: ChirpStack 4.19.0, ChirpStack Gateway Bridge 4.1.0, ChirpStack REST API 4.19.0
 - **Logging Framework**: Log4j2
 - **Deployment Tool**: Docker-compose
 
