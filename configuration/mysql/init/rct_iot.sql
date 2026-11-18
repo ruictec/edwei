@@ -1,6 +1,27 @@
 ﻿# Host: localhost  (Version 5.7.26-log)
-# Date: 2026-11-12 18:29:06
+# Date: 2026-11-18 11:43:55
 # Generator: MySQL-Front 6.0  (Build 2.20)
+
+
+#
+# Structure for table "audio_file_tbl"
+#
+
+DROP TABLE IF EXISTS `audio_file_tbl`;
+CREATE TABLE `audio_file_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deveui` varchar(64) NOT NULL COMMENT '设备号',
+  `projectid` char(8) NOT NULL DEFAULT '' COMMENT '项目编号',
+  `filename` varchar(64) NOT NULL COMMENT '文件名',
+  `filesize` bigint(20) DEFAULT '0' COMMENT '文件大小(字节)',
+  `ctime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_audio_deveui_ctime` (`deveui`,`ctime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='设备音频文件';
+
+#
+# Data for table "audio_file_tbl"
+#
 
 
 #
@@ -184,6 +205,7 @@ CREATE TABLE `customer_members_tbl` (
   `memo` varchar(255) DEFAULT NULL COMMENT '备注',
   `basenum` int(11) DEFAULT NULL COMMENT '初始基础步数',
   `steps` int(11) DEFAULT '0' COMMENT '步数',
+  `vibstate` int(11) DEFAULT NULL COMMENT '运动次数',
   `stepdate` varchar(16) DEFAULT NULL COMMENT '步数日期',
   `reboottimes` int(11) DEFAULT NULL COMMENT '设备重启次数',
   PRIMARY KEY (`id`)
@@ -954,7 +976,7 @@ CREATE TABLE `project_config_tbl` (
   `camera` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '摄像头',
   `outDoor` tinyint(1) NOT NULL DEFAULT '1' COMMENT '室外定位',
   `inDoor` tinyint(1) NOT NULL DEFAULT '1' COMMENT '室内定位',
-  `attenFlag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '3级用户显示考勤还是信标状态(true:考勤)',
+  `attenFlag` tinyint(1) NOT NULL DEFAULT '2' COMMENT '用户首页展示：0信标，1考勤，2人员告警统计',
   `locateManage` tinyint(1) NOT NULL DEFAULT '0' COMMENT '任务管理',
   `audio` tinyint(1) NOT NULL DEFAULT '0' COMMENT '录音管理',
   PRIMARY KEY (`id`)
@@ -1189,6 +1211,37 @@ CREATE TABLE `run_info_tbl` (
 
 #
 # Data for table "run_info_tbl"
+#
+
+
+#
+# Structure for table "ship_access_tbl"
+#
+
+DROP TABLE IF EXISTS `ship_access_tbl`;
+CREATE TABLE `ship_access_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `beaconid` varchar(16) NOT NULL DEFAULT '' COMMENT '信标编号',
+  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '姓名',
+  `depart` varchar(32) DEFAULT NULL COMMENT '部门',
+  `worktype` varchar(32) DEFAULT NULL COMMENT '工种',
+  `colour` int(11) DEFAULT NULL COMMENT '颜色',
+  `tenantid` varchar(16) NOT NULL DEFAULT '' COMMENT '公司编号',
+  `projectid` varchar(8) NOT NULL DEFAULT '' COMMENT '项目编号',
+  `groundid` int(11) DEFAULT NULL COMMENT '楼层编号',
+  `type` int(11) NOT NULL COMMENT '1进船 2出船 3进舱 4出舱',
+  `place` varchar(16) NOT NULL DEFAULT '' COMMENT '船，或舱名如1舱',
+  `eui` varchar(16) DEFAULT NULL COMMENT '触发本次方向的网关号',
+  `alias` varchar(32) DEFAULT NULL COMMENT '触发本次方向的网关别名',
+  `time` int(11) DEFAULT NULL COMMENT '发生时间，秒',
+  PRIMARY KEY (`id`),
+  KEY `idx_projectid_time` (`projectid`,`time`),
+  KEY `idx_beaconid_time` (`beaconid`,`time`),
+  KEY `idx_tenantid_time` (`tenantid`,`time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='进出船、进出船舱记录';
+
+#
+# Data for table "ship_access_tbl"
 #
 
 
