@@ -1,1 +1,0 @@
-import{_ as a,c as o,g as t,h as c,r,o as n,cE as d}from"./index-BWmIX8yI.js";const _={name:"base-card"},l={class:"card_base"};function p(e,f,i,m,h,u){const s=r("el-card");return n(),o("div",l,[t(s,{shadow:"hover"},{default:c(()=>[d(e.$slots,"default")]),_:3})])}const b=a(_,[["render",p]]);export{b};
