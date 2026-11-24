@@ -44,6 +44,7 @@
 ## 重要说明
 
 - 使用root权限进行操作
+- 安装docker时，需要设置日志驱动限制
 - 构建项目需要在edwei目录下操作
 - 构建前必须将 `edwei.tar.gz` 解压后的 JAR 放到 `file/` 目录，否则 `docker-compose build` 会失败
 - 确保端口没有冲突

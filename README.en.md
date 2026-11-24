@@ -43,6 +43,7 @@
 ## Important Notes
 
 - Use root privileges for operations
+- When installing Docker, you need to configure the logging driver limits
 - Project building needs to be done in the edwei directory
 - Before building, extract `edwei.tar.gz` and place the JARs in the `file/` directory; otherwise `docker-compose build` will fail
 - Ensure no port conflicts
