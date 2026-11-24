@@ -138,7 +138,6 @@ services:
     volumes:
       - ./data/redis:/var/run/redis
       - ./configuration/redis/redis.conf:/usr/local/redis/conf/redis.conf
-      - ./log/redis:/var/log/redis
     ports:
       - 6379:6379
     command: ["redis-server","/usr/local/redis/conf/redis.conf"]
